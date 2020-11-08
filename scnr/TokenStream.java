@@ -84,7 +84,13 @@ public class TokenStream {
 			case '!':
 				// look for <=, >=, ==, and !=
 				nextChar = readChar();
-				// TODO TO BE COMPLETED
+				if (nextChar == '=') {
+					t.setValue(t.getValue() + nextChar);
+					nextChar = readChar();
+					return t;
+				}
+				else
+					t.setValue(t.getValue());
 				return t;
 			case '|':
 				// Look for ||
@@ -120,7 +126,8 @@ public class TokenStream {
 		// Then check for a separator.
 		if (isSeparator(nextChar)) {
 			t.setType("Separator");
-			t.setValue(t.getValue());
+			t.setValue(t.getValue() + nextChar);
+			nextChar = readChar();
 			return t;
 		}
 
