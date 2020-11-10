@@ -48,10 +48,15 @@ public class ConcreteSyntax {
 		// Program --> void main ( ) '{' Declarations Statements '}'
 		String[] header = { "main", "(", ")" };
 		Program p = new Program();
-		for (int i = 0; i < header.length; i++)
+		for (int i = 0; i < header.length; i++) {
 			// bypass "void main ( )"
 			match(header[i]);
-		// TODO TO BE COMPLETED
+		}
+		// TODO TO BE COMPLETED complete?
+		match("{");
+		p.decpart = declarations();
+		p.body = statements();
+		match("}");
 		return p;
 	}
 
@@ -123,9 +128,11 @@ public class ConcreteSyntax {
 			s = ifStatement();
 		else if (token.getValue().equals("while")) {
 			// WhileStatement
-			// TODO TO BE COMPLETED
+			// TODO TO BE COMPLETED - complete?
+			s = whileStatement();
 		} else if (token.getType().equals("Identifier")) { // Assignment
-			// TODO TO BE COMPLETED
+			// TODO TO BE COMPLETED - complete?
+			s = assignment();
 		} else
 			throw new RuntimeException(SyntaxError("Statement"));
 		return s;
@@ -144,7 +151,12 @@ public class ConcreteSyntax {
 		// Assignment --> Identifier = Expression ;
 		Assignment a = new Assignment();
 		if (token.getType().equals("Identifier")) {
-			// TODO TO BE COMPLETED
+			a.target = new Variable();
+			a.target.id = token.getValue();
+			token = input.nextToken();
+			match("=");
+			a.source = expression();
+			match(";");
 		} else
 			throw new RuntimeException(SyntaxError("Identifier"));
 		return a;
@@ -173,7 +185,10 @@ public class ConcreteSyntax {
 		e = relation();
 		while (token.getValue().equals("&&")) {
 			b = new Binary();
-			// TODO TO BE COMPLETED
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = relation();
 			e = b;
 		}
 		return e;
@@ -185,10 +200,13 @@ public class ConcreteSyntax {
 		Expression e;
 		e = addition();
 		// TODO TO BE COMPLETED
-		while (token.getValue().equals("<") || token.getValue().equals("<=") || token.getValue().equals(">=")
-				|| token.getValue().equals("==") || token.getValue().equals("<>")) {
+		while (token.getValue().equals("<") || token.getValue().equals("<=") || token.getValue().equals(">") ||
+				token.getValue().equals(">=") || token.getValue().equals("==") || token.getValue().equals("<>")) {
 			b = new Binary();
-			// TODO TO BE COMPLETED
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = addition();
 			e = b;
 		}
 		return e;
@@ -201,6 +219,12 @@ public class ConcreteSyntax {
 		e = term();
 		while (token.getValue().equals("+") || token.getValue().equals("-")) {
 			// TODO TO BE COMPLETED
+			b = new Binary();
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = term();
+			e = b;
 		}
 		return e;
 	}
@@ -213,6 +237,10 @@ public class ConcreteSyntax {
 		while (token.getValue().equals("*") || token.getValue().equals("/")) {
 			b = new Binary();
 			// TODO TO BE COMPLETED
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = negation();
 			e = b;
 		}
 		return e;
