@@ -52,7 +52,7 @@ public class ConcreteSyntax {
 			// bypass "void main ( )"
 			match(header[i]);
 		}
-		// TODO TO BE COMPLETED complete?
+		// TODO TO BE COMPLETED
 		match("{");
 		p.decpart = declarations();
 		p.body = statements();
@@ -128,10 +128,10 @@ public class ConcreteSyntax {
 			s = ifStatement();
 		else if (token.getValue().equals("while")) {
 			// WhileStatement
-			// TODO TO BE COMPLETED - complete?
+			// TODO TO BE COMPLETED
 			s = whileStatement();
 		} else if (token.getType().equals("Identifier")) { // Assignment
-			// TODO TO BE COMPLETED - complete?
+			// TODO TO BE COMPLETED
 			s = assignment();
 		} else
 			throw new RuntimeException(SyntaxError("Statement"));
@@ -151,6 +151,7 @@ public class ConcreteSyntax {
 		// Assignment --> Identifier = Expression ;
 		Assignment a = new Assignment();
 		if (token.getType().equals("Identifier")) {
+			// TODO TO BE COMPLETED
 			a.target = new Variable();
 			a.target.id = token.getValue();
 			token = input.nextToken();
@@ -185,6 +186,7 @@ public class ConcreteSyntax {
 		e = relation();
 		while (token.getValue().equals("&&")) {
 			b = new Binary();
+			// TODO TO BE COMPLETED
 			b.term1 = e;
 			b.op = new Operator(token.getValue());
 			token = input.nextToken();
@@ -199,10 +201,11 @@ public class ConcreteSyntax {
 		Binary b;
 		Expression e;
 		e = addition();
-		// TODO TO BE COMPLETED - complete?
+		// TODO TO BE COMPLETED
 		while (token.getValue().equals("<") || token.getValue().equals("<=") || token.getValue().equals(">") ||
 				token.getValue().equals(">=") || token.getValue().equals("==") || token.getValue().equals("<>")) {
 			b = new Binary();
+			// TODO TO BE COMPLETED
 			b.term1 = e;
 			b.op = new Operator(token.getValue());
 			token = input.nextToken();
@@ -218,7 +221,7 @@ public class ConcreteSyntax {
 		Expression e;
 		e = term();
 		while (token.getValue().equals("+") || token.getValue().equals("-")) {
-			// TODO TO BE COMPLETED - complete?
+			// TODO TO BE COMPLETED
 			b = new Binary();
 			b.term1 = e;
 			b.op = new Operator(token.getValue());
@@ -236,7 +239,7 @@ public class ConcreteSyntax {
 		e = negation();
 		while (token.getValue().equals("*") || token.getValue().equals("/")) {
 			b = new Binary();
-			// TODO TO BE COMPLETED - complete?
+			// TODO TO BE COMPLETED
 			b.term1 = e;
 			b.op = new Operator(token.getValue());
 			token = input.nextToken();
