@@ -5,7 +5,7 @@ public class ParserDemo {
 
 		// Change the path!
 		TokenStream tStream = new TokenStream(
-				"D:\\Important\\School\\Git\\CS361\\hw6\\src\\prog1.jay");
+				"D:\\Important\\School\\Git\\CS361\\hw6\\src\\prog7.jay");
 
 		ConcreteSyntax cSyntax = new ConcreteSyntax(tStream);
 		Program p = cSyntax.program();
