@@ -264,6 +264,13 @@ public class ConcreteSyntax {
 		// IfStatement --> if ( Expression ) Statement { else Statement }opt
 		Conditional c = new Conditional();
 		// TODO TO BE COMPLETED
+		match("if");
+        	c.test = expression();
+       	c.thenbranch = statement();
+        	if (token.getValue().equals("else")) {
+           	token = input.nextToken();
+           	c.elsebranch = statement();
+        	}
 		return c;
 	}
 
